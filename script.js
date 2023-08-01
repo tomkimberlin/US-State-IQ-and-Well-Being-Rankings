@@ -1,6 +1,48 @@
-d3.csv("data.csv").then(function (data) {
+// Create a function to color the cell
+function colorCell(rank) {
+  if (isNaN(rank)) return "#e3f2fd";
+  var blue = [70, 130, 180];
+  var orange = [255, 165, 0];
+  var gradient = [];
+  for (var i = 0; i < 3; i++) {
+    gradient[i] = Math.round(
+      blue[i] + ((rank - 1) * (orange[i] - blue[i])) / 49
+    );
+  }
+  return "rgb(" + gradient.join(",") + ")";
+}
+
+// Create a function to color the correlation cell
+function colorCellCorrelation(rank) {
+  if (isNaN(rank) || rank === "--") return "#e3f2fd";
+  var value = parseFloat(rank);
+  if (isNaN(value)) return "#e3f2fd";
+  var blue = [70, 130, 180];
+  var white = [255, 255, 255];
+  var red = [255, 0, 0];
+  var gradient = [];
+  if (value < 0) {
+    for (var i = 0; i < 3; i++) {
+      gradient[i] = Math.round(red[i] + (value + 1) * (white[i] - red[i]));
+    }
+  } else {
+    for (var i = 0; i < 3; i++) {
+      gradient[i] = Math.round(white[i] + value * (blue[i] - white[i]));
+    }
+  }
+  return "rgb(" + gradient.join(",") + ")";
+}
+
+// Function to create a table
+function createTable(data, id, title, colorFunction) {
+  // Create a new div
+  var tableSection = d3.select("main").append("section").attr("id", id);
+
+  // Add h2 title for the table
+  tableSection.append("h2").text(title);
+
   // Create a table
-  var table = d3.select("#table").append("table");
+  var table = tableSection.append("table");
 
   // Create table header
   var thead = table.append("thead");
@@ -34,19 +76,19 @@ d3.csv("data.csv").then(function (data) {
       return d.value;
     })
     .style("background-color", function (d) {
-      return colorCell(d.value);
+      return colorFunction(d.value);
     });
-});
+}
 
-function colorCell(rank) {
-  if (isNaN(rank)) return "#e3f2fd"; // Return light blue color for non-numeric cells (like state names)
-  var blue = [70, 130, 180]; // SteelBlue color in RGB
-  var orange = [255, 165, 0]; // Orange color in RGB
-  var gradient = [];
-  for (var i = 0; i < 3; i++) {
-    gradient[i] = Math.round(
-      blue[i] + ((rank - 1) * (orange[i] - blue[i])) / 49
+// Load both CSV files and create tables once the data is ready
+Promise.all([d3.csv("rankings.csv"), d3.csv("correlations.csv")]).then(
+  function (values) {
+    createTable(values[0], "mainTable", "U.S. State Rankings", colorCell);
+    createTable(
+      values[1],
+      "correlationTable",
+      "Correlations Between Factors",
+      colorCellCorrelation
     );
   }
-  return "rgb(" + gradient.join(",") + ")";
-}
+);

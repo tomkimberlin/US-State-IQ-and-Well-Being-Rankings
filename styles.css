@@ -1,6 +1,7 @@
-.container {
-  width: 100%;
+#mainTable,
+#correlationTable {
   overflow-x: auto;
+  padding-bottom: 8px;
 }
 
 table {
@@ -8,20 +9,27 @@ table {
   width: 100%;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
 }
 
-th {
+#mainTable th {
   background-color: #1a237e;
   color: white;
 }
 
-th, td {
-  text-align: left;
-  padding: 8px;
+#correlationTable tr td:first-child {
+  font-weight: bold;
 }
 
+#correlationTable th {
+  background-color: rgb(227, 242, 253);
+}
+
+th,
 td {
-  font-size: 14px;
+  text-align: left;
+  padding: 8px;
 }
