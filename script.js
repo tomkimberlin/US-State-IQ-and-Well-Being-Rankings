@@ -1,4 +1,4 @@
-// Colors cell based on rank. Higher rank is closer to orange and lower rank is closer to blue
+// Colors cell based on rank. Higher rank is closer to orange and lower rank is closer to blue.
 function colorCell(rank) {
   // If rank is not a number, return a light blue color (for non-numeric cells like state names)
   if (isNaN(rank)) return "#e3f2fd";
@@ -20,7 +20,7 @@ function colorCell(rank) {
   return "rgb(" + gradient.join(",") + ")";
 }
 
-// Colors cell based on correlation value. Negative values are closer to red, positive values are closer to blue
+// Colors cell based on correlation value. Negative values are closer to red, positive values are closer to blue.
 function colorCellCorrelation(rank) {
   // If rank is not a number or is '--', return a light blue color (for non-numeric cells like state names or '--' cells)
   if (isNaN(rank) || rank === "--") return "#e3f2fd";
