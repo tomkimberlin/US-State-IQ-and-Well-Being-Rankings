@@ -1,17 +1,27 @@
-table {
+.container {
   width: 100%;
+  overflow-x: auto;
+}
+
+table {
   border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid black;
 }
 
 th {
   background-color: #1a237e;
   color: white;
-  font-weight: bold;
 }
 
-td,
-th {
-  border: 1px solid #ddd;
+th, td {
+  text-align: left;
   padding: 8px;
-  text-align: center;
+}
+
+td {
+  font-size: 14px;
 }
