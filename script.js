@@ -1,35 +1,56 @@
-// Create a function to color the cell
+// Colors cell based on rank. Higher rank is closer to orange and lower rank is closer to blue
 function colorCell(rank) {
+  // If rank is not a number, return a light blue color (for non-numeric cells like state names)
   if (isNaN(rank)) return "#e3f2fd";
+
+  // SteelBlue color in RGB
   var blue = [70, 130, 180];
+  // Orange color in RGB
   var orange = [255, 165, 0];
+
   var gradient = [];
+
+  // Loop to generate gradient color for cell based on rank
   for (var i = 0; i < 3; i++) {
     gradient[i] = Math.round(
       blue[i] + ((rank - 1) * (orange[i] - blue[i])) / 49
     );
   }
+
   return "rgb(" + gradient.join(",") + ")";
 }
 
-// Create a function to color the correlation cell
+// Colors cell based on correlation value. Negative values are closer to red, positive values are closer to blue
 function colorCellCorrelation(rank) {
+  // If rank is not a number or is '--', return a light blue color (for non-numeric cells like state names or '--' cells)
   if (isNaN(rank) || rank === "--") return "#e3f2fd";
+
   var value = parseFloat(rank);
+
+  // If value is not a number after conversion, return a light blue color
   if (isNaN(value)) return "#e3f2fd";
+
+  // SteelBlue color in RGB
   var blue = [70, 130, 180];
+  // White color in RGB
   var white = [255, 255, 255];
+  // Red color in RGB
   var red = [255, 0, 0];
+
   var gradient = [];
+
   if (value < 0) {
+    // Negative values are closer to red
     for (var i = 0; i < 3; i++) {
       gradient[i] = Math.round(red[i] + (value + 1) * (white[i] - red[i]));
     }
   } else {
+    // Positive values are closer to blue
     for (var i = 0; i < 3; i++) {
       gradient[i] = Math.round(white[i] + value * (blue[i] - white[i]));
     }
   }
+
   return "rgb(" + gradient.join(",") + ")";
 }
 

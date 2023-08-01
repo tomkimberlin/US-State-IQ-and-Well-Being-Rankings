@@ -26,10 +26,6 @@ td {
   color: white;
 }
 
-#correlationTable tr td:first-child {
-  font-weight: bold;
-}
-
 #correlationTable th {
   background-color: rgb(227, 242, 253);
 }
